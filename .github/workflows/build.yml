@@ -5,25 +5,25 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch: # permite rodar manualmente
+  workflow_dispatch: 
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Baixar o repositório
+      
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Instalar Java 17
+      
       - name: Set up Java 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      # 3️⃣ Instalar Android SDK + NDK + CMake
+      
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
         with:
@@ -31,15 +31,15 @@ jobs:
           ndk-version: 28.2.13676358
           cmake-version: 3.22.1
 
-      # 4️⃣ Dar permissão de execução ao gradlew
+      
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-      # 5️⃣ Fazer build
+      
       - name: Build Release APK
         run: ./gradlew assembleRelease
 
-      # 6️⃣ Salvar o APK como artefato de build
+      
       - name: Upload Release APK
         uses: actions/upload-artifact@v4
         with:
